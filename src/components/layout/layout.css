@@ -1,0 +1,9 @@
+.layout {
+
+    display: flex;
+    justify-content: center;
+    background-color: rgb(170, 73, 73);
+    height: 90vh;
+    padding-top: 10vh;
+
+}
