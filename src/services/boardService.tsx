@@ -22,6 +22,26 @@ class Board implements BoardInterface {
 
     }
 
+    boardInitialization = () : CellInterface[][] => {
+
+        let newBoard = [];
+
+        for (let i = 0; i < BOARD_HEIGHT; i++) {
+
+            let row = new Array(BOARD_WIDTH);
+            row.fill({
+                type: 0,
+                state: "empty"
+            });
+
+            newBoard.push(row);
+
+        }
+
+        return (newBoard);
+
+    }
+
 }
 
 export const boardProperties = new Board([]);
