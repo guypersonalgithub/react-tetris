@@ -1,9 +1,6 @@
 import { CellInterface } from "../models/cellInterface";
 import { BoardInterface } from "../models/boardInterface";
 
-export const BOARD_WIDTH = 10;
-export const BOARD_HEIGHT = 20;
-
 class Board implements BoardInterface {
 
     constructor(
@@ -22,13 +19,13 @@ class Board implements BoardInterface {
 
     }
 
-    boardInitialization = () : CellInterface[][] => {
+    boardInitialization = (board_height: number, board_width: number) : CellInterface[][] => {
 
         let newBoard = [];
 
-        for (let i = 0; i < BOARD_HEIGHT; i++) {
+        for (let i = 0; i < board_height; i++) {
 
-            let row = new Array(BOARD_WIDTH);
+            let row = new Array(board_width);
             row.fill({
                 type: 0,
                 state: "empty"
