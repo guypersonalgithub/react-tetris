@@ -1,12 +1,39 @@
 import React from 'react';
 import "./board.css";
 import Cell from '../cell/cell';
+import { CellInterface } from '../../models/cellInterface';
 
-const Board = ({board: []}) => {
+interface BoardProps {
+
+    board: CellInterface[][]
+
+}
+
+const Board = (props: BoardProps) => {
 
     return (
 
-        <div className = "board"></div>
+        <div className = "board">
+
+            {props.board.map((row: CellInterface[]) => {
+
+                return (
+
+                    row.map((cell: CellInterface, index: number) => {
+
+                        return (
+
+                            <Cell key={index} />
+
+                        );      
+
+                    })
+
+                );
+
+            })}
+
+        </div>
 
     )
 
