@@ -71,4 +71,4 @@ class Shape implements ShapeInterface {
 
 }
 
-export const shape = new Shape({x: 0, y: 0}, []);
+export const shapeProperties = new Shape({x: 0, y: 0}, []);
