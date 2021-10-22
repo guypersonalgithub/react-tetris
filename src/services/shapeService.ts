@@ -1,5 +1,7 @@
+import { CellInterface } from "../models/cellInterface";
 import { ShapeInterface, ShapePropsInterface } from "../models/shapeInterface";
 import { ShapeTypes } from "./shapeTypeService";
+import { checkMovementCollision } from './collisionService';
 
 class Shape implements ShapeInterface {
 
@@ -66,6 +68,71 @@ class Shape implements ShapeInterface {
         }
 
         return shapeProps;
+
+    }
+
+    moveShape = (direction: string, board: CellInterface[][]) : {canMove: boolean, shapeProperties: ShapePropsInterface} => {
+
+        let directionNumber: number;
+
+        if (direction == "right") {
+
+            directionNumber = 1;
+
+        }
+        
+        else if (direction == "left") {
+
+            directionNumber = -1;
+
+        }
+
+        else {
+
+            directionNumber = 2;
+
+        }
+
+        let canMove = checkMovementCollision(directionNumber, {location: this._location, shape: this._shape}, board);
+
+        let shapeProps : ShapePropsInterface = {
+
+            location: {
+
+                x: 0,
+                y: 0
+
+            },
+            shape: []
+
+        };
+
+        if (canMove) {
+
+            shapeProps.location = {
+
+                x: (directionNumber == -1 || directionNumber == 1) ? this._location.x + directionNumber : this._location.x,
+                y: directionNumber == 2 ? this._location.y + 1 : this._location.y
+
+            }
+
+            shapeProps.shape = this._shape.map((row: number[]) => {
+
+                return (
+    
+                    row.map((cell: number) => {
+    
+                        return (cell);
+    
+                    })
+    
+                );
+
+            });
+
+        }
+
+        return ({canMove: canMove, shapeProperties: shapeProps});
 
     }
 

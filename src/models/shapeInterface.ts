@@ -1,3 +1,5 @@
+import { CellInterface } from "./cellInterface";
+
 export interface ShapePropsInterface {
 
     location: {
@@ -20,6 +22,7 @@ export interface ShapeInterface {
     },
     shape: number[][],
     pickShape(): number[][],
-    shapeInitialization(shapeType: number[][]): ShapePropsInterface
+    shapeInitialization(shapeType: number[][]): ShapePropsInterface,
+    moveShape(direction: string, board: CellInterface[][]): {canMove: boolean, shapeProperties: ShapePropsInterface}
 
 }

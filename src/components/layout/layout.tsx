@@ -49,8 +49,44 @@ const Layout = () => {
 
     }
 
+    const moveShape = (key: React.KeyboardEvent<HTMLDivElement>): void => {
+
+        if (gameState != "" && gameState != "end") {
+
+            let moveShape;
+
+            if (key.code == "ArrowLeft") {
+
+                moveShape = shapeProperties.moveShape("left", boardProperties.board);
+
+            }
+
+            else if (key.code == "ArrowRight") {
+
+                moveShape = shapeProperties.moveShape("right", boardProperties.board);
+
+            }
+
+            else if (key.code == "ArrowDown") {
+
+                moveShape = shapeProperties.moveShape("down", boardProperties.board);
+
+            }
+
+            if (moveShape && moveShape.shapeProperties.shape.length > 0) {
+
+                shapeProperties.location = moveShape.shapeProperties.location;
+                shapeProperties.shape = moveShape.shapeProperties.shape;
+                setShape(moveShape.shapeProperties);
+
+            }
+
+        }
+
+    }
+
     return (
-        <div className = "layout" role = "button">
+        <div className = "layout" role = "button" tabIndex = {0} onKeyDown={event => moveShape(event)}>
             <div className = "tetrisContainer">
                 <Board board = {board} />
             </div>
