@@ -23,7 +23,7 @@ const Board = (props: BoardProps) => {
 
                         return (
 
-                            <Cell key={index} />
+                            <Cell type = {cell.type} key = {index} />
 
                         );      
 
