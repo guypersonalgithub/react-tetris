@@ -9,8 +9,20 @@ import { shapeProperties } from '../../services/shapeService';
 const Layout = () => {
 
     const [board, setBoard] = useState<CellInterface[][]>([]);
-    const [shape, setShape] = useState<ShapePropsInterface>();
+    const [shape, setShape] = useState<ShapePropsInterface>({location: {x: 0, y: 0}, shape: []});
     const [gameState, setGameState] = useState<string>("");
+
+    useEffect(() => {
+
+        if (gameState != "") {
+
+            let updatedBoard = boardProperties.updateShapeOnBoard(shape);
+            boardProperties.board = updatedBoard;
+            setBoard(updatedBoard);
+
+        }
+
+    }, [shape, gameState]);
 
     const toggleGameState = (): void => {
 
@@ -30,8 +42,8 @@ const Layout = () => {
 
         else {
 
+            setShape({location: {x: 0, y: 0}, shape: []});
             setGameState("end");
-            setShape(undefined);
 
         }
 

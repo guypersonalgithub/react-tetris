@@ -45,7 +45,7 @@ class Shape implements ShapeInterface {
 
     shapeInitialization = (shapeType: number[][]): ShapePropsInterface => {
 
-        let shapeProps = {
+        let shapeProps : ShapePropsInterface = {
             location: {
                 x: 0,
                 y: 0

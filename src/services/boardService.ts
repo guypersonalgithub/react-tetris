@@ -1,6 +1,7 @@
 import { CellInterface } from "../models/cellInterface";
 import { BoardInterface } from "../models/boardInterface";
 import { BOARD_WIDTH, BOARD_HEIGHT } from "./boardDimensionsService";
+import { ShapePropsInterface } from "../models/shapeInterface";
 
 class Board implements BoardInterface {
 
@@ -37,6 +38,59 @@ class Board implements BoardInterface {
         }
 
         return (newBoard);
+
+    }
+
+    clearEmptyCells = () : CellInterface[][] => {
+
+        let clearedBoard: CellInterface[][] = this._board.map((row: CellInterface[]) => {
+
+            return (
+
+                row.map((cell: CellInterface) => {
+
+                    if (cell.type != 0 && cell.state == "empty") {
+
+                        return ({ type: 0, state: "empty" });   
+
+                    }   
+
+                    return (cell);
+
+                })
+
+            );
+
+        });
+
+        return (clearedBoard);
+
+    }
+
+    updateShapeOnBoard = (shape: ShapePropsInterface) : CellInterface[][] => {
+
+        let clearBoard = this.clearEmptyCells();
+
+        for (let i = 0; i < shape.shape.length; i++) {
+
+            for (let j = 0; j < shape.shape[i].length; j++) {
+
+                if (shape.shape[i][j] != 0) {
+
+                    clearBoard[i + shape.location.y][j + shape.location.x] = {
+    
+                        type: shape.shape[i][j],
+                        state: "empty"
+    
+                    }
+    
+                }
+
+            }
+
+        }
+
+        return clearBoard;
 
     }
 
