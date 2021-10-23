@@ -94,6 +94,33 @@ class Board implements BoardInterface {
 
     }
 
+    changeCellsStateAfterDrop = (shape: ShapePropsInterface) : CellInterface[][] => {
+
+        let clearBoard = this.clearEmptyCells();
+
+        for (let i = 0; i < shape.shape.length; i++) {
+
+            for (let j = 0; j < shape.shape[i].length; j++) {
+    
+                if (shape.shape[i][j] != 0 && clearBoard[shape.location.y + i][shape.location.x + j].state == "empty") {
+    
+                    clearBoard[shape.location.y + i][shape.location.x + j] = {
+    
+                        type: shape.shape[i][j],
+                        state: "full"
+    
+                    }
+    
+                }
+    
+            }
+    
+        }
+
+        return (clearBoard);
+
+    }
+
 }
 
 export const boardProperties = new Board([]);

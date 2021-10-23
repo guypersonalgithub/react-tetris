@@ -110,9 +110,9 @@ const attemptingToMoveDown = (shape: ShapePropsInterface, board: CellInterface[]
 
 }
 
-export const checkRotationOrPlacementCollision = (rotatedShape: ShapePropsInterface, board: CellInterface[][]): boolean => {
+export const checkRotationOrPlacementCollision = (placedShape: ShapePropsInterface, board: CellInterface[][]): boolean => {
 
-    if (rotatedShape.location.x + rotatedShape.shape[0].length <= BOARD_WIDTH && checkRotationOrPlacementBlockCollision(rotatedShape, board)) {
+    if (placedShape.location.x + placedShape.shape[0].length <= BOARD_WIDTH && checkRotationOrPlacementBlockCollision(placedShape, board)) {
 
         return true;
 
@@ -122,19 +122,19 @@ export const checkRotationOrPlacementCollision = (rotatedShape: ShapePropsInterf
 
 }
 
-const checkRotationOrPlacementBlockCollision = (rotatedShape: ShapePropsInterface, board: CellInterface[][]): boolean => {
+const checkRotationOrPlacementBlockCollision = (placedShape: ShapePropsInterface, board: CellInterface[][]): boolean => {
 
-    for (let i = 0; i < rotatedShape.shape.length; i++) {
+    for (let i = 0; i < placedShape.shape.length; i++) {
 
-        for (let j = 0; j < rotatedShape.shape[i].length; j++) {
+        for (let j = 0; j < placedShape.shape[i].length; j++) {
 
-            if ((rotatedShape.location.y + i) > BOARD_HEIGHT - 1) {
+            if ((placedShape.location.y + i) > BOARD_HEIGHT - 1) {
 
                 return false;
 
             }
             
-            if (rotatedShape.shape[i][j] != 0 && board[rotatedShape.location.y + i][rotatedShape.location.x + j].state != "empty") {
+            if (placedShape.shape[i][j] != 0 && board[placedShape.location.y + i][placedShape.location.x + j].state != "empty") {
 
                 return false;
 

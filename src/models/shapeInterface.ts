@@ -24,6 +24,6 @@ export interface ShapeInterface {
     pickShape : () => number[][],
     shapeInitialization : (shapeType: number[][]) => ShapePropsInterface,
     moveShape : (direction: string, board: CellInterface[][]) => {canMove: boolean, shapeProperties: ShapePropsInterface},
-    rotateShape : (board: CellInterface[][]) => {canRotate: boolean, shapeProperties: ShapePropsInterface}
+    placeShape : (board: CellInterface[][]) => {canBePlaced: boolean, shapeProperties: ShapePropsInterface}
 
 }

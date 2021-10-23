@@ -136,9 +136,9 @@ class Shape implements ShapeInterface {
 
     }
 
-    rotateShape = (board: CellInterface[][]) : {canRotate: boolean, shapeProperties: ShapePropsInterface} => {
+    placeShape = (board: CellInterface[][]) : {canBePlaced: boolean, shapeProperties: ShapePropsInterface} => {
 
-        let rotatedShape: ShapePropsInterface = {
+        let placedShape: ShapePropsInterface = {
 
             location: { 
 
@@ -161,13 +161,13 @@ class Shape implements ShapeInterface {
 
             }
 
-            rotatedShape.shape.push(row);
+            placedShape.shape.push(row);
 
         }
 
-        let canRotate = checkRotationOrPlacementCollision(rotatedShape, board);
+        let canBePlaced = checkRotationOrPlacementCollision(placedShape, board);
 
-        return ({canRotate: canRotate, shapeProperties: rotatedShape});
+        return ({canBePlaced: canBePlaced, shapeProperties: placedShape});
 
     }
 

@@ -42,7 +42,6 @@ const Layout = () => {
 
         else {
 
-            setShape({location: {x: 0, y: 0}, shape: []});
             setGameState("end");
 
         }
@@ -76,7 +75,7 @@ const Layout = () => {
 
             else if (key.code == "ArrowUp") {
 
-                rotateShape = shapeProperties.rotateShape(boardProperties.board);
+                rotateShape = shapeProperties.placeShape(boardProperties.board);
 
             }
 
@@ -88,11 +87,24 @@ const Layout = () => {
 
             }
 
-            else if (rotateShape && rotateShape.canRotate) {
+            else if (rotateShape && rotateShape.canBePlaced) {
 
                 shapeProperties.location = rotateShape.shapeProperties.location;
                 shapeProperties.shape = rotateShape.shapeProperties.shape;
                 setShape(rotateShape.shapeProperties);
+
+            }
+
+            else if (moveShape && !moveShape.canMove && key.code == "ArrowDown") {
+
+                let shapeWasStoppedInsideTheBoard = boardProperties.changeCellsStateAfterDrop(shapeProperties);
+                boardProperties.board = shapeWasStoppedInsideTheBoard;
+                setBoard(boardProperties.board);
+                let newShapeType = shapeProperties.pickShape();
+                let newShape = shapeProperties.shapeInitialization(newShapeType);
+                shapeProperties.location = newShape.location;
+                shapeProperties.shape = newShape.shape;
+                setShape(newShape);
 
             }
 
