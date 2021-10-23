@@ -28,4 +28,4 @@ const Cell = (props: Props) => {
 
 }
 
-export default Cell;
+export default React.memo(Cell);
