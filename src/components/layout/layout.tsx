@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import "./layout.css";
 import Board from '../board/board';
 import Score from '../score/score';
@@ -14,6 +14,8 @@ const Layout = () => {
     const [shape, setShape] = useState<ShapePropsInterface>({location: {x: 0, y: 0}, shape: []});
     const [gameState, setGameState] = useState<string>("");
     const [score, setScore] = useState<number>(0);
+    const [delay, setDelay] = useState<number>(0);
+    const dropInterval = useRef<ReturnType<typeof setInterval>>();
 
     useEffect(() => {
 
@@ -26,6 +28,52 @@ const Layout = () => {
         }
 
     }, [shape, gameState]);
+
+    const shapeIsStopped = useCallback(() => {
+
+        setDelay(0);
+        let shapeWasStoppedInsideTheBoard = boardProperties.changeCellsStateAfterDrop(shapeProperties);
+        let clearedRowsBoard = boardProperties.clearFullRowsAfterDrop(shapeWasStoppedInsideTheBoard);
+        boardProperties.board = clearedRowsBoard.clearRowsBoard;
+        setBoard(boardProperties.board);
+        scoreProperties.increaseScore(clearedRowsBoard.addedScore);
+        setScore(scoreProperties.score);
+        generateNewShape();
+
+    }, [score]);
+
+    useEffect(() => {
+
+        if (gameState != "" && gameState != "end" && delay != 0) {
+
+            dropInterval.current = setInterval(() => {
+
+                let fallingShape = shapeProperties.moveShape("down", boardProperties.board);
+                if (fallingShape && fallingShape.canMove) {
+
+                    shapeProperties.location = fallingShape.shapeProperties.location;
+                    shapeProperties.shape = fallingShape.shapeProperties.shape;
+                    setShape(fallingShape.shapeProperties);
+    
+                }
+
+                else {
+
+                    shapeIsStopped();
+
+                }
+
+            }, delay);
+
+        }
+
+        return () => {
+
+            clearInterval(dropInterval.current!);
+            
+        }
+
+    }, [gameState, delay]);
 
     const toggleGameState = (): void => {
 
@@ -42,6 +90,7 @@ const Layout = () => {
         else {
 
             setGameState("end");
+            setDelay(0);
 
         }
 
@@ -96,13 +145,7 @@ const Layout = () => {
 
             else if (moveShape && !moveShape.canMove && key.code == "ArrowDown") {
 
-                let shapeWasStoppedInsideTheBoard = boardProperties.changeCellsStateAfterDrop(shapeProperties);
-                let clearedRowsBoard = boardProperties.clearFullRowsAfterDrop(shapeWasStoppedInsideTheBoard);
-                boardProperties.board = clearedRowsBoard.clearRowsBoard;
-                setBoard(boardProperties.board);
-                scoreProperties.increaseScore(clearedRowsBoard.addedScore);
-                setScore(scoreProperties.score);
-                generateNewShape();
+                shapeIsStopped();
 
             }
 
@@ -117,6 +160,7 @@ const Layout = () => {
         shapeProperties.location = newShape.location;
         shapeProperties.shape = newShape.shape;
         setShape(newShape);
+        setDelay(1000);
 
     }
 
