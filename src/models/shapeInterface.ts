@@ -22,7 +22,7 @@ export interface ShapeInterface {
     },
     shape: number[][],
     pickShape: () => number[][],
-    shapeInitialization: (shapeType: number[][]) => ShapePropsInterface,
+    shapeInitialization: (shapeType: number[][], board: CellInterface[][]) => ShapePropsInterface,
     moveShape: (direction: string, board: CellInterface[][]) => {canMove: boolean, shapeProperties: ShapePropsInterface},
     placeShape: (board: CellInterface[][]) => {canBePlaced: boolean, shapeProperties: ShapePropsInterface}
 

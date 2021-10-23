@@ -156,11 +156,22 @@ const Layout = () => {
     const generateNewShape = () => {
 
         let newShapeType = shapeProperties.pickShape();
-        let newShape = shapeProperties.shapeInitialization(newShapeType);
-        shapeProperties.location = newShape.location;
-        shapeProperties.shape = newShape.shape;
-        setShape(newShape);
-        setDelay(1000);
+        let newShape = shapeProperties.shapeInitialization(newShapeType, boardProperties.board);
+        if (newShape.shape.length > 0) {
+
+            shapeProperties.location = newShape.location;
+            shapeProperties.shape = newShape.shape;
+            setShape(newShape);
+            setDelay(1000);
+
+        }
+
+        else {
+
+            setGameState("end");
+            setDelay(0);
+
+        }
 
     }
 

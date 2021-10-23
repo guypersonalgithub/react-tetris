@@ -45,7 +45,7 @@ class Shape implements ShapeInterface {
 
     }
 
-    shapeInitialization = (shapeType: number[][]): ShapePropsInterface => {
+    shapeInitialization = (shapeType: number[][], board: CellInterface[][]): ShapePropsInterface => {
 
         let shapeProps : ShapePropsInterface = {
             location: {
@@ -67,7 +67,15 @@ class Shape implements ShapeInterface {
 
         }
 
-        return shapeProps;
+        let canShapeBePlaced = checkRotationOrPlacementCollision(shapeProps, board);
+
+        if (canShapeBePlaced) {
+
+            return shapeProps;
+
+        }
+
+        return {location: {x: 0, y: 0}, shape: []};
 
     }
 
