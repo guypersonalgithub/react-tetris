@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import "./layout.css";
 import Board from '../board/board';
+import Score from '../score/score';
 import { CellInterface } from '../../models/cellInterface';
 import { ShapePropsInterface } from '../../models/shapeInterface';
 import { boardProperties } from '../../services/boardService';
 import { shapeProperties } from '../../services/shapeService';
+import { scoreProperties } from '../../services/scoreService';
 
 const Layout = () => {
 
     const [board, setBoard] = useState<CellInterface[][]>([]);
     const [shape, setShape] = useState<ShapePropsInterface>({location: {x: 0, y: 0}, shape: []});
     const [gameState, setGameState] = useState<string>("");
+    const [score, setScore] = useState<number>(0);
 
     useEffect(() => {
 
@@ -118,7 +121,8 @@ const Layout = () => {
                 <Board board = {board} />
             </div>
             <div className = "tetrisMenu">
-            {gameState == "" || gameState == "end" ? <button className = "stateButton" onClick={toggleGameState}>Start</button> : <button className = "stateButton" onClick={toggleGameState}>Concede</button>}
+                <Score score = {score} />
+                {gameState == "" || gameState == "end" ? <button className = "stateButton" onClick={toggleGameState}>Start</button> : <button className = "stateButton" onClick={toggleGameState}>Concede</button>}
             </div>
         </div>
     )
