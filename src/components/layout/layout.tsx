@@ -178,6 +178,7 @@ const Layout = () => {
     return (
         <div className = "layout" role = "button" tabIndex = {0} onKeyDown={event => moveShape(event)}>
             <div className = "tetrisContainer">
+                {gameState == "end" ? <div className = "gameOver">Game Over</div> : null}
                 <Board board = {board} />
             </div>
             <div className = "tetrisMenu">
