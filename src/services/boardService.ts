@@ -121,6 +121,40 @@ class Board implements BoardInterface {
 
     }
 
+    clearFullRowsAfterDrop = (updatedBoard: CellInterface[][]) : {clearRowsBoard: CellInterface[][], addedScore: number} => {
+
+        let addedScore = 0;
+        
+        for (let i = updatedBoard.length -1; i>= 0; i--) {
+
+            let filter = updatedBoard[i].filter((value: CellInterface, index: number) => updatedBoard[i][index].type == 0);
+
+            if (filter.length == 0) {
+    
+                updatedBoard.splice(i, 1);
+                i = i + 1;
+                let newRow = new Array(BOARD_WIDTH);
+                newRow.fill({
+                    type: 0,
+                    state: "empty"
+                });
+                updatedBoard.unshift(newRow);
+                addedScore = addedScore + 10;
+    
+            }
+    
+            else if (filter.length == BOARD_WIDTH) {
+    
+                break;
+    
+            }
+
+        }
+
+        return ({clearRowsBoard: updatedBoard, addedScore: addedScore});
+
+    }
+
 }
 
 export const boardProperties = new Board([]);

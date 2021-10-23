@@ -101,8 +101,11 @@ const Layout = () => {
             else if (moveShape && !moveShape.canMove && key.code == "ArrowDown") {
 
                 let shapeWasStoppedInsideTheBoard = boardProperties.changeCellsStateAfterDrop(shapeProperties);
-                boardProperties.board = shapeWasStoppedInsideTheBoard;
+                let clearedRowsBoard = boardProperties.clearFullRowsAfterDrop(shapeWasStoppedInsideTheBoard);
+                boardProperties.board = clearedRowsBoard.clearRowsBoard;
                 setBoard(boardProperties.board);
+                scoreProperties.increaseScore(clearedRowsBoard.addedScore);
+                setScore(scoreProperties.score);
                 let newShapeType = shapeProperties.pickShape();
                 let newShape = shapeProperties.shapeInitialization(newShapeType);
                 shapeProperties.location = newShape.location;

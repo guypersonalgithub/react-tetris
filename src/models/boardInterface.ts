@@ -8,5 +8,6 @@ export interface BoardInterface {
     clearEmptyCells: () => CellInterface[][],
     updateShapeOnBoard: (shape: ShapePropsInterface) => CellInterface[][],
     changeCellsStateAfterDrop: (shape: ShapePropsInterface) => CellInterface[][]
+    clearFullRowsAfterDrop: (updatedBoard: CellInterface[][]) => {clearRowsBoard: CellInterface[][], addedScore: number}
 
 }

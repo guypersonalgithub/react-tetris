@@ -26,9 +26,9 @@ class Score implements ScoreInterface {
 
     increaseScore = (addedScore: number): number => {
 
-        let newScore = this._score + addedScore;
+        this._score = this._score + addedScore;
 
-        return newScore;
+        return this._score;
 
     }
 
