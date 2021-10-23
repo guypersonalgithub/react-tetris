@@ -54,6 +54,7 @@ const Layout = () => {
         if (gameState != "" && gameState != "end") {
 
             let moveShape;
+            let rotateShape;
 
             if (key.code == "ArrowLeft") {
 
@@ -73,11 +74,25 @@ const Layout = () => {
 
             }
 
-            if (moveShape && moveShape.shapeProperties.shape.length > 0) {
+            else if (key.code == "ArrowUp") {
+
+                rotateShape = shapeProperties.rotateShape(boardProperties.board);
+
+            }
+
+            if (moveShape && moveShape.canMove) {
 
                 shapeProperties.location = moveShape.shapeProperties.location;
                 shapeProperties.shape = moveShape.shapeProperties.shape;
                 setShape(moveShape.shapeProperties);
+
+            }
+
+            else if (rotateShape && rotateShape.canRotate) {
+
+                shapeProperties.location = rotateShape.shapeProperties.location;
+                shapeProperties.shape = rotateShape.shapeProperties.shape;
+                setShape(rotateShape.shapeProperties);
 
             }
 

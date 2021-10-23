@@ -1,7 +1,7 @@
 import { CellInterface } from "../models/cellInterface";
 import { ShapeInterface, ShapePropsInterface } from "../models/shapeInterface";
 import { ShapeTypes } from "./shapeTypeService";
-import { checkMovementCollision } from './collisionService';
+import { checkMovementCollision, checkRotationOrPlacementCollision } from './collisionService';
 
 class Shape implements ShapeInterface {
 
@@ -133,6 +133,41 @@ class Shape implements ShapeInterface {
         }
 
         return ({canMove: canMove, shapeProperties: shapeProps});
+
+    }
+
+    rotateShape = (board: CellInterface[][]) : {canRotate: boolean, shapeProperties: ShapePropsInterface} => {
+
+        let rotatedShape: ShapePropsInterface = {
+
+            location: { 
+
+                x: this._location.x, 
+                y: this._location.y 
+            
+            },
+
+            shape: []
+
+        };
+
+        for (let i = 0; i < this._shape[0].length; i++) {
+
+            let row = [];
+
+            for (let j = this._shape.length - 1; j >= 0; j--) {
+
+                row.push(this._shape[j][i]);
+
+            }
+
+            rotatedShape.shape.push(row);
+
+        }
+
+        let canRotate = checkRotationOrPlacementCollision(rotatedShape, board);
+
+        return ({canRotate: canRotate, shapeProperties: rotatedShape});
 
     }
 
