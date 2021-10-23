@@ -35,11 +35,7 @@ const Layout = () => {
             boardProperties.board = initBoard;
             setBoard(initBoard);
             setGameState("start");
-            let newShapeType = shapeProperties.pickShape();
-            let newShape = shapeProperties.shapeInitialization(newShapeType);
-            shapeProperties.location = newShape.location;
-            shapeProperties.shape = newShape.shape;
-            setShape(newShape);
+            generateNewShape();
 
         }
 
@@ -106,15 +102,21 @@ const Layout = () => {
                 setBoard(boardProperties.board);
                 scoreProperties.increaseScore(clearedRowsBoard.addedScore);
                 setScore(scoreProperties.score);
-                let newShapeType = shapeProperties.pickShape();
-                let newShape = shapeProperties.shapeInitialization(newShapeType);
-                shapeProperties.location = newShape.location;
-                shapeProperties.shape = newShape.shape;
-                setShape(newShape);
+                generateNewShape();
 
             }
 
         }
+
+    }
+
+    const generateNewShape = () => {
+
+        let newShapeType = shapeProperties.pickShape();
+        let newShape = shapeProperties.shapeInitialization(newShapeType);
+        shapeProperties.location = newShape.location;
+        shapeProperties.shape = newShape.shape;
+        setShape(newShape);
 
     }
 
